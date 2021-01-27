@@ -1,0 +1,143 @@
+#03. basic of R programming
+
+#1. Conditional Statement
+
+#1.1> Bitwise operation  & AND/ | OR /! NOT
+TRUE & FALSE # FALSE
+TRUE | FALSE #TRUE
+!TRUE  #FALSE
+
+(3>2) & (2>3) # TRUE& FALSE
+(3>2) | (2>3) #TRUE
+!(2>3)
+!2>3 # SAME result as above but to make clear, use ()
+
+#2.2> conditional statement 
+#IF (CONDITION) {STATEMENT} , STATEMENT IS IMPLEMENTED ONLY THE CONDITION IS TRUE(HAS TO BE LOGICAL)
+a=1; b=0
+if (a<2) {
+  b=b+1   ##remind that b+=1 doesn't work here.
+}
+b # once b=1, more than twice b=2
+
+#2.2> conditional statement2
+#IF (condition) {statement1} else {statement2}
+a=3;b=0;
+if (a<2){
+  b=b+1
+}else {
+  b=b-1
+}
+b #b=-1
+
+#2.3 Loop
+# for (index argument: variable in vector) {statement: iteratively implemented #the length of vector times}
+# which means j iteration, the value of variable is vector[j]
+x=0
+for ( i in 1:3){
+  x=x+i # x는 갱신됨.
+}
+x #6 since 1+2+3=6
+
+
+x=0
+v=c(2,4,6,8)
+for ( i in v){
+  x=x+i
+}
+x #20
+sum(v) # same as the loop above
+
+#doubly applied loop
+x=0
+for (i in 1:3){
+  for (j in 1:2){
+    x=x+i+j
+  }
+}
+x  #1+1/1+2/2+1/2+2/3+1/3+2= 2+3+3+4+4+5=21
+
+# break: stop the loop including the break statement
+#next: pass the current statement in the loo
+# stop: stop all the loops including the stop statement
+
+#3. function
+#3.1> create function : (arguments) {statement} and return() which return the value of objects 
+### 함수 내부에 다른 함수 호출 가능
+
+#return single variable
+testfunction=function(x1,x2)
+{
+  v=x1^2+x2
+  return(v)
+}
+testfunction(x1=1,x2=2)
+
+#return vector
+testfunction=function(x1,x2)
+{
+  v1=x1^2+x2
+  v2=x1^2-x2
+  return(c(v1,v2))
+}
+testfunction(x1=1,x2=2)
+
+testFunction=function(x){
+  v=x^2+y
+  return(v)
+}
+testFunction(x) #error since there's no y defined
+y=1
+testFunction(x)
+y=10
+testFunction(x)
+
+#function can also return the list
+testFunction=function(x){
+  v1=x^2
+  v2=matrix((1:5)^x,1,5)
+  return(list(first=v1,second=v2))
+}
+testFunction(2)
+
+#column average function
+s_colmean=function(x)
+{
+  if (class(x)!="matrix") stop()
+  v=rep(0,ncol(x))
+  for (i in 1:ncol(x))
+  {
+    v[i]=mean(x[,i]) # column의 평균은 [,i] 임.
+  }
+  return(v)}
+s_colmean(x)
+x=matrix(1:12,3,4)
+x
+
+#rowwise average function
+row_mean=function(x)
+{
+  if (class(x)!="matrix") stop()
+  v=rep(0,nrow(x))
+  for (i in 1:nrow(x))
+  {
+    v[i]=mean(x[i,]) # column의 평균은 [,i] 임.
+  }
+  return(v)}
+row_mean(x)
+
+
+#4. file
+getwd() #current directory
+setwd( 'c:intro/' ) # set directory newly
+
+#4.1> READ table : converts character data into factor but we can change that with stringsAsFactors
+a=read.table("air.data", header=TRUE, sep=" ", stringsAsFactos=TRUE) # stringsAsFactors=TRUE가 DEFAULT
+head(a)
+
+#4.2> READ XLSX
+library(xlsx)
+a=read.xlsx('air.data', header=TRUE, sheetIndex=1, stringsAsFactors=FALSE)
+# 시트 넘버도 지정 가능
+
+
